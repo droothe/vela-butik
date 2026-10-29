@@ -57,7 +57,7 @@ function Index() {
     return list;
   }, [cat, size, color, maxPrice, sort]);
 
-  const add = (p: Product, s = p.sizes[1] ?? p.sizes[0], c = p.colors[0]) => {
+  const add = (p: Product, s: string = p.sizes[1] ?? p.sizes[0] ?? "M", c: string = p.colors[0] ?? "") => {
     setCart((prev) => {
       const i = prev.findIndex((x) => x.product.id === p.id && x.size === s && x.color === c);
       if (i >= 0) return prev.map((x, j) => (j === i ? { ...x, qty: x.qty + 1 } : x));
@@ -357,7 +357,7 @@ function Index() {
 }
 
 function ProductCard({ p, wished, onWish, onAdd }: { p: Product; wished: boolean; onWish: () => void; onAdd: (p: Product, s?: string, c?: string) => void }) {
-  const [c, setC] = useState(p.colors[0]);
+  const [c, setC] = useState<string>(p.colors[0] ?? "");
   const [picking, setPicking] = useState(false);
   return (
     <div className="group">
