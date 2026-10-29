@@ -8,11 +8,15 @@ import navy from "@/assets/p-navy.jpg";
 
 export const FREE_SHIPPING_THRESHOLD = 1500;
 
-export const CATEGORIES = [
+export const PRODUCT_CATEGORIES = [
   "Gömlek",
   "Ceket & Mont",
   "Polar & Sweatshirt",
   "Triko & Kazak",
+] as const;
+
+export const CATEGORIES = [
+  ...PRODUCT_CATEGORIES,
   "Yeni Gelenler",
   "İndirim",
 ] as const;
@@ -32,7 +36,7 @@ export const SIZES = ["S", "M", "L", "XL", "XXL"] as const;
 export type Product = {
   id: string;
   title: string;
-  category: (typeof CATEGORIES)[number];
+  category: (typeof PRODUCT_CATEGORIES)[number];
   tag?: "Yeni" | "Çok Satan" | "İndirim";
   price: number;
   oldPrice?: number;
@@ -53,6 +57,17 @@ export const PRODUCTS: Product[] = [
   { id: "7", title: "Yarım Fermuarlı Kaşmir Hissi Kazak", category: "Triko & Kazak", tag: "Yeni", price: 999, colors: ["Açık Mavi", "Bej"], sizes: ["M", "L", "XL"], image: blue, hover: olive, added: 8 },
   { id: "8", title: "Selanik Örgü Hırka", category: "Polar & Sweatshirt", tag: "İndirim", price: 799, oldPrice: 1099, colors: ["Bordo", "Haki Yeşil"], sizes: ["S", "M", "L", "XL"], image: cardigan, hover: orange, added: 2 },
 ];
+
+export const LEGACY_PRODUCT_IMAGES: Record<string, { image: string; hover: string }> = {
+  "legacy-1": { image: olive, hover: blue },
+  "legacy-2": { image: orange, hover: beige },
+  "legacy-3": { image: cardigan, hover: navy },
+  "legacy-4": { image: jacket, hover: beige },
+  "legacy-5": { image: beige, hover: jacket },
+  "legacy-6": { image: navy, hover: olive },
+  "legacy-7": { image: blue, hover: olive },
+  "legacy-8": { image: cardigan, hover: orange },
+};
 
 export const formatTL = (n: number) => `${n.toLocaleString("tr-TR")} TL`;
 

@@ -1,10 +1,23 @@
 # Modalife
 
-Implement exactly the screenshot and nothing else
-
 This project was built with [Lovable](https://lovable.dev).
 
 **Live app**: https://modalife.lovable.app
+
+## Supabase setup
+
+1. Copy `.env.example` to `.env.local` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` from your Supabase project's API settings. The anon/publishable key is intended for browser use; never put a `service_role` key in this app.
+2. Run the SQL migration in `supabase/migrations/20261029000000_initial_store.sql` in the Supabase SQL Editor. It creates the catalog, orders, stock handling, public product-image bucket, and row-level security policies. The migration also seeds the eight products currently shown in the storefront.
+3. In Supabase Authentication, create the admin user. Then run this SQL once with that user's ID from Authentication → Users:
+
+   ```sql
+   insert into public.user_roles (user_id, role)
+   values ('YOUR-AUTH-USER-UUID', 'admin');
+   ```
+
+4. Start the app and open `/admin`. Sign in with that admin user's email and password. Admins can add/edit products and images, manage stock, view orders, and update order statuses. New storefront orders use cash-on-delivery and stock is checked/decremented transactionally.
+
+The storefront keeps its local sample catalog available before Supabase credentials are configured. Once configured, catalog and order data are read from Supabase; database errors are shown in the UI rather than silently using sample data.
 
 ## Build with Lovable
 

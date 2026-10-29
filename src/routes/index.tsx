@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Search, Heart, ShoppingBag, Menu, Zap, RefreshCw, Lock, Instagram, MessageCircle, Plus, Minus, X,
 } from "lucide-react";
@@ -11,6 +11,8 @@ import logo from "@/assets/logo.png.asset.json";
 import {
   CATEGORIES, COLORS, SIZES, PRODUCTS, formatTL, remainingForFreeShipping, FREE_SHIPPING_THRESHOLD, type Product,
 } from "@/lib/catalog";
+import { createOrder, listPublicProducts, type CustomerDetails } from "@/lib/store";
+import { supabase, supabaseConfigured } from "@/lib/supabase";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,9 +30,34 @@ export const Route = createFileRoute("/")({
 
 type CartItem = { product: Product; size: string; color: string; qty: number };
 type Sort = "new" | "asc" | "desc";
+const customerFields: { key: keyof CustomerDetails; label: string; required: boolean }[] = [
+  { key: "name", label: "Ad Soyad", required: true },
+  { key: "phone", label: "Telefon", required: true },
+  { key: "email", label: "E-posta (isteğe bağlı)", required: false },
+  { key: "city", label: "İl", required: true },
+  { key: "district", label: "İlçe", required: true },
+];
 
 function Index() {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [catalogProducts, setCatalogProducts] = useState<Product[]>(
+    supabaseConfigured ? [] : PRODUCTS,
+  );
+  const [catalogLoading, setCatalogLoading] = useState(supabaseConfigured);
+  const [catalogError, setCatalogError] = useState("");
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [checkoutBusy, setCheckoutBusy] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
+  const [createdOrderId, setCreatedOrderId] = useState("");
+  const [customer, setCustomer] = useState<CustomerDetails>({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    district: "",
+    notes: "",
+  });
   const [cartOpen, setCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -42,8 +69,29 @@ function Index() {
   const [maxPrice, setMaxPrice] = useState(2000);
   const [sort, setSort] = useState<Sort>("new");
 
+  useEffect(() => {
+    if (!supabaseConfigured) return;
+    let active = true;
+    listPublicProducts()
+      .then((items) => {
+        if (active) {
+          setCatalogProducts(items);
+          setCatalogLoading(false);
+        }
+      })
+      .catch((error: unknown) => {
+        if (active) {
+          setCatalogError(error instanceof Error ? error.message : String(error));
+          setCatalogLoading(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const products = useMemo(() => {
-    let list = PRODUCTS.filter((p) => {
+    let list = catalogProducts.filter((p) => {
       if (cat === "Yeni Gelenler" && p.tag !== "Yeni") return false;
       if (cat === "İndirim" && !p.oldPrice) return false;
       if (cat && cat !== "Yeni Gelenler" && cat !== "İndirim" && p.category !== cat) return false;
@@ -55,7 +103,7 @@ function Index() {
       sort === "new" ? b.added - a.added : sort === "asc" ? a.price - b.price : b.price - a.price,
     );
     return list;
-  }, [cat, size, color, maxPrice, sort]);
+  }, [catalogProducts, cat, size, color, maxPrice, sort]);
 
   const add = (p: Product, s: string = p.sizes[1] ?? p.sizes[0] ?? "M", c: string = p.colors[0] ?? "") => {
     setCart((prev) => {
@@ -77,8 +125,31 @@ function Index() {
     document.getElementById("koleksiyon")?.scrollIntoView({ behavior: "smooth" });
   };
   const searchResults = query.trim()
-    ? PRODUCTS.filter((p) => p.title.toLocaleLowerCase("tr").includes(query.toLocaleLowerCase("tr")))
+    ? catalogProducts.filter((p) => p.title.toLocaleLowerCase("tr").includes(query.toLocaleLowerCase("tr")))
     : [];
+
+  const submitOrder = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setCheckoutError("");
+    setCheckoutBusy(true);
+    try {
+      const orderId = await createOrder(
+        customer,
+        cart.map(({ product, size: selectedSize, color: selectedColor, qty }) => ({
+          product_id: product.id,
+          quantity: qty,
+          size: selectedSize,
+          color: selectedColor,
+        })),
+      );
+      setCreatedOrderId(orderId);
+      setCart([]);
+    } catch (error) {
+      setCheckoutError(error instanceof Error ? error.message : String(error));
+    } finally {
+      setCheckoutBusy(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -214,7 +285,14 @@ function Index() {
           </div>
         </div>
 
-        {products.length === 0 ? (
+        {catalogError && (
+          <p role="alert" className="mb-6 rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">
+            Ürünler Supabase üzerinden yüklenemedi: {catalogError}
+          </p>
+        )}
+        {catalogLoading ? (
+          <p className="py-16 text-center text-muted-foreground">Ürünler yükleniyor...</p>
+        ) : products.length === 0 ? (
           <p className="py-16 text-center text-muted-foreground">Bu filtrelere uygun ürün bulunamadı.</p>
         ) : (
           <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
@@ -234,7 +312,7 @@ function Index() {
             <a href="https://instagram.com/moda.life1908" target="_blank" rel="noreferrer" className="mt-1 inline-block text-sm font-semibold text-gold hover:underline">@moda.life1908</a>
           </div>
           <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-3">
-            {PRODUCTS.slice(0, 8).map((p) => (
+            {catalogProducts.slice(0, 8).map((p) => (
               <a key={p.id} href="https://instagram.com/moda.life1908" target="_blank" rel="noreferrer" className="group relative aspect-square overflow-hidden rounded-xl">
                 <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 grid place-items-center bg-primary/0 transition group-hover:bg-primary/40">
@@ -313,12 +391,93 @@ function Index() {
             <Row l="Ara Toplam" r={formatTL(subtotal)} />
             <Row l="Kargo" r={remaining > 0 && subtotal > 0 ? formatTL(79) : "Bedava"} />
             <Row l="Toplam" r={formatTL(subtotal + (remaining > 0 && subtotal > 0 ? 79 : 0))} bold />
-            <button disabled={!cart.length} className="mt-3 w-full rounded-xl bg-primary py-4 text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-md transition hover:opacity-90 disabled:opacity-40">
+            <button
+              disabled={!cart.length || !supabase}
+              onClick={() => {
+                setCheckoutError("");
+                setCreatedOrderId("");
+                setCheckoutOpen(true);
+              }}
+              className="mt-3 w-full rounded-xl bg-primary py-4 text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-md transition hover:opacity-90 disabled:opacity-40"
+            >
               Siparişi Tamamla
             </button>
+            {!supabase && <p className="text-xs text-muted-foreground">Sipariş vermek için Supabase ayarlarını ekleyin.</p>}
           </div>
         </SheetContent>
       </Sheet>
+
+      {/* ORDER CHECKOUT */}
+      <Dialog
+        open={checkoutOpen}
+        onOpenChange={(open) => {
+          setCheckoutOpen(open);
+          if (!open) setCreatedOrderId("");
+        }}
+      >
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
+          <DialogTitle className="font-display text-2xl text-primary">
+            {createdOrderId ? "Siparişiniz alındı" : "Teslimat bilgileri"}
+          </DialogTitle>
+          {createdOrderId ? (
+            <div className="space-y-4">
+              <p>Siparişiniz başarıyla oluşturuldu. Sipariş numaranız:</p>
+              <p className="rounded-lg bg-secondary p-3 font-semibold">{createdOrderId}</p>
+              <button
+                className="w-full rounded-xl bg-primary py-3 font-semibold text-primary-foreground"
+                onClick={() => {
+                  setCheckoutOpen(false);
+                  setCartOpen(false);
+                }}
+              >
+                Tamam
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={submitOrder} className="space-y-3">
+              <p className="text-sm text-muted-foreground">Kapıda ödeme · Toplam {formatTL(subtotal + (remaining > 0 && subtotal > 0 ? 79 : 0))}</p>
+              {customerFields.map(({ key, label, required }) => (
+                <label key={key} className="block space-y-1 text-sm font-medium">
+                  {label}
+                  <input
+                    required={required}
+                    type={key === "email" ? "email" : "text"}
+                    value={customer[key]}
+                    onChange={(event) => setCustomer((previous) => ({ ...previous, [key]: event.target.value }))}
+                    className="w-full rounded-lg border border-input bg-background px-3 py-2"
+                  />
+                </label>
+              ))}
+              <label className="block space-y-1 text-sm font-medium">
+                Açık adres
+                <textarea
+                  required
+                  minLength={5}
+                  value={customer.address}
+                  onChange={(event) => setCustomer((previous) => ({ ...previous, address: event.target.value }))}
+                  className="min-h-20 w-full rounded-lg border border-input bg-background px-3 py-2"
+                />
+              </label>
+              <label className="block space-y-1 text-sm font-medium">
+                Sipariş notu (isteğe bağlı)
+                <textarea
+                  value={customer.notes}
+                  onChange={(event) => setCustomer((previous) => ({ ...previous, notes: event.target.value }))}
+                  className="min-h-16 w-full rounded-lg border border-input bg-background px-3 py-2"
+                />
+              </label>
+              {checkoutError && <p role="alert" className="text-sm text-destructive">{checkoutError}</p>}
+              <button
+                type="submit"
+                disabled={checkoutBusy || !cart.length}
+                className="w-full rounded-xl bg-primary py-3 font-semibold text-primary-foreground disabled:opacity-50"
+              >
+                {checkoutBusy ? "Sipariş oluşturuluyor..." : "Kapıda Ödeme ile Sipariş Ver"}
+              </button>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* SEARCH */}
       <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
