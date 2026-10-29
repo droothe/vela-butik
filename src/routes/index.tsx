@@ -7,7 +7,6 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import heroImg from "@/assets/hero.jpg";
-import logo from "@/assets/logo.png.asset.json";
 import {
   CATEGORIES, COLORS, SIZES, PRODUCTS, formatTL, remainingForFreeShipping, FREE_SHIPPING_THRESHOLD, type Product,
 } from "@/lib/catalog";
@@ -164,15 +163,11 @@ function Index() {
             <Menu className="h-6 w-6" />
           </button>
           <a href="/" className="flex min-w-0 items-center gap-2">
-            <img src={logo.url} alt="Moda Life 1908 logo" className="h-10 w-10 shrink-0 md:h-12 md:w-12" />
-            <div className="min-w-0 leading-tight">
-              <div className="font-display truncate text-base font-bold tracking-wide sm:text-lg text-primary md:text-xl">
-                MODA LİFE <span className="text-gold">1908</span>
-              </div>
-              <div className="hidden text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:block">
-                Zamana Direnen Stil
-              </div>
-            </div>
+            <img
+              src="/logo.png"
+              alt="Moda Life 1908 — Zamana Direnen Stil"
+              className="h-12 w-auto shrink-0 object-contain md:h-14"
+            />
           </a>
           <nav className="mx-auto hidden gap-6 lg:flex">
             {CATEGORIES.map((c) => (
@@ -328,7 +323,11 @@ function Index() {
       <footer className="bg-primary text-primary-foreground">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <img src={logo.url} alt="Moda Life 1908" className="mb-4 h-16 w-16" />
+            <img
+              src="/logo.png"
+              alt="Moda Life 1908 — Zamana Direnen Stil"
+              className="mb-4 h-24 w-auto object-contain"
+            />
             <p className="text-sm opacity-75">Zamana Direnen Stil. Erkek giyiminde zamansız parçalar.</p>
           </div>
           <FooterCol title="Kurumsal" items={["Hakkımızda", "İletişim"]} />

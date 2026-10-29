@@ -288,6 +288,11 @@ function AdminPage() {
           <a href="/" className="text-sm text-muted-foreground hover:text-primary">
             ← Mağazaya dön
           </a>
+          <img
+            src="/logo.png"
+            alt="Moda Life 1908 — Zamana Direnen Stil"
+            className="mx-auto h-40 w-auto object-contain"
+          />
           <h1 className="font-display text-3xl font-semibold text-primary">Yönetici Girişi</h1>
           <label className="block space-y-1 text-sm font-medium">
             E-posta
@@ -350,9 +355,14 @@ function AdminPage() {
             <a href="/" className="text-sm text-muted-foreground hover:text-primary">
               ← Mağazaya dön
             </a>
-            <h1 className="mt-1 font-display text-4xl font-semibold text-primary">
-              Yönetim Paneli
-            </h1>
+            <div className="mt-3 flex items-center gap-4">
+              <img
+                src="/logo.png"
+                alt="Moda Life 1908 — Zamana Direnen Stil"
+                className="h-16 w-auto object-contain"
+              />
+              <h1 className="font-display text-4xl font-semibold text-primary">Yönetim Paneli</h1>
+            </div>
           </div>
           <button
             onClick={signOut}
@@ -684,6 +694,11 @@ function AdminMessage({ text, action }: { text: string; action?: React.ReactNode
   return (
     <main className="grid min-h-screen place-items-center bg-secondary px-4">
       <div className="space-y-4 rounded-xl bg-card p-8 text-center shadow">
+        <img
+          src="/logo.png"
+          alt="Moda Life 1908 — Zamana Direnen Stil"
+          className="mx-auto h-40 w-auto object-contain"
+        />
         <h1 className="font-display text-2xl font-semibold text-primary">{text}</h1>
         {action}
         <a href="/" className="block text-sm text-muted-foreground hover:text-primary">
