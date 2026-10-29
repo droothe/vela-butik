@@ -95,7 +95,7 @@ function Index() {
           <a href="/" className="flex min-w-0 items-center gap-2">
             <img src={logo.url} alt="Moda Life 1908 logo" className="h-10 w-10 shrink-0 md:h-12 md:w-12" />
             <div className="min-w-0 leading-tight">
-              <div className="font-display truncate text-lg font-bold tracking-wide text-primary md:text-xl">
+              <div className="font-display truncate text-base font-bold tracking-wide sm:text-lg text-primary md:text-xl">
                 MODA LİFE <span className="text-gold">1908</span>
               </div>
               <div className="hidden text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:block">
