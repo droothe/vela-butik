@@ -52,7 +52,7 @@ create table public.products (
 create table public.orders (
   id uuid primary key default gen_random_uuid(),
   order_number text not null unique default (
-    'ML-' || to_char(now(), 'YYYYMMDD') || '-' ||
+    'VELA-' || to_char(now(), 'YYYYMMDD') || '-' ||
     lpad(nextval('public.order_number_seq')::text, 6, '0')
   ),
   customer_name text not null check (char_length(trim(customer_name)) between 2 and 160),
@@ -297,14 +297,14 @@ for each row execute function public.restore_stock_on_order_cancel();
 insert into public.products (
   slug, name, category, tag, price, original_price, colors, sizes, stock_quantity, sort_order
 ) values
-  ('legacy-1', 'Yarım Fermuarlı Dik Yaka Selanik Kazak', 'Triko & Kazak', 'Çok Satan', 899, 1299, array['Haki Yeşil', 'Açık Mavi', 'Lacivert'], array['S', 'M', 'L', 'XL'], 20, 5),
-  ('legacy-2', 'Hakim Yaka Keten Gömlek', 'Gömlek', 'Yeni', 749, null, array['Kiremit', 'Bej'], array['M', 'L', 'XL', 'XXL'], 20, 9),
+  ('legacy-1', 'Dokulu Bisiklet Yaka Triko', 'Triko & Kazak', 'Çok Satan', 899, 1299, array['Haki Yeşil', 'Açık Mavi', 'Lacivert'], array['S', 'M', 'L', 'XL'], 20, 5),
+  ('legacy-2', 'Kadın Keten Karışımlı Gömlek', 'Gömlek', 'Yeni', 749, null, array['Kiremit', 'Bej'], array['M', 'L', 'XL', 'XXL'], 20, 9),
   ('legacy-3', 'Düğmeli Triko Hırka', 'Triko & Kazak', 'İndirim', 849, 1199, array['Bordo', 'Lacivert'], array['S', 'M', 'L'], 20, 3),
-  ('legacy-4', 'Kapitone Kadife Yaka Mont', 'Ceket & Mont', 'Yeni', 1899, null, array['Siyah', 'Haki Yeşil'], array['M', 'L', 'XL', 'XXL'], 20, 10),
+  ('legacy-4', 'Kadın Kapitone Kısa Mont', 'Ceket & Mont', 'Yeni', 1899, null, array['Siyah', 'Haki Yeşil'], array['M', 'L', 'XL', 'XXL'], 20, 10),
   ('legacy-5', 'Fitilli Kadife Gömlek Ceket', 'Ceket & Mont', 'Çok Satan', 1149, 1499, array['Bej', 'Bordo'], array['S', 'M', 'L', 'XL'], 20, 7),
-  ('legacy-6', 'Uzun Kollu Pike Polo', 'Polar & Sweatshirt', null, 649, null, array['Lacivert', 'Siyah'], array['S', 'M', 'L', 'XL', 'XXL'], 20, 6),
-  ('legacy-7', 'Yarım Fermuarlı Kaşmir Hissi Kazak', 'Triko & Kazak', 'Yeni', 999, null, array['Açık Mavi', 'Bej'], array['M', 'L', 'XL'], 20, 8),
-  ('legacy-8', 'Selanik Örgü Hırka', 'Polar & Sweatshirt', 'İndirim', 799, 1099, array['Bordo', 'Haki Yeşil'], array['S', 'M', 'L', 'XL'], 20, 2);
+  ('legacy-6', 'Erkek Uzun Kollu Pike Polo', 'Polar & Sweatshirt', null, 649, null, array['Lacivert', 'Siyah'], array['S', 'M', 'L', 'XL', 'XXL'], 20, 6),
+  ('legacy-7', 'Yumuşak Dokulu Kaşmir Hissi Kazak', 'Triko & Kazak', 'Yeni', 999, null, array['Açık Mavi', 'Bej'], array['M', 'L', 'XL'], 20, 8),
+  ('legacy-8', 'Örgü Hırka', 'Polar & Sweatshirt', 'İndirim', 799, 1099, array['Bordo', 'Haki Yeşil'], array['S', 'M', 'L', 'XL'], 20, 2);
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values (

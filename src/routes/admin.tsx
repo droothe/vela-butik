@@ -15,7 +15,7 @@ import { supabase, supabaseConfigured } from "@/lib/supabase";
 import type { OrderItemRow, OrderRow, ProductRow } from "@/lib/supabase.types";
 
 export const Route = createFileRoute("/admin")({
-  head: () => ({ meta: [{ title: "Yönetim Paneli — MODA LİFE 1908" }] }),
+  head: () => ({ meta: [{ title: "Yönetim Paneli — Vela Moda & Butik" }] }),
   component: AdminPage,
 });
 
@@ -289,8 +289,8 @@ function AdminPage() {
             ← Mağazaya dön
           </a>
           <img
-            src="/logo.png"
-            alt="Moda Life 1908 — Zamana Direnen Stil"
+            src="/logo.svg"
+            alt="Vela Moda & Butik"
             className="mx-auto h-40 w-auto object-contain"
           />
           <h1 className="font-display text-3xl font-semibold text-primary">Yönetici Girişi</h1>
@@ -357,8 +357,8 @@ function AdminPage() {
             </a>
             <div className="mt-3 flex items-center gap-4">
               <img
-                src="/logo.png"
-                alt="Moda Life 1908 — Zamana Direnen Stil"
+                src="/logo.svg"
+                alt="Vela Moda & Butik"
                 className="h-16 w-auto object-contain"
               />
               <h1 className="font-display text-4xl font-semibold text-primary">Yönetim Paneli</h1>
@@ -695,8 +695,8 @@ function AdminMessage({ text, action }: { text: string; action?: React.ReactNode
     <main className="grid min-h-screen place-items-center bg-secondary px-4">
       <div className="space-y-4 rounded-xl bg-card p-8 text-center shadow">
         <img
-          src="/logo.png"
-          alt="Moda Life 1908 — Zamana Direnen Stil"
+          src="/logo.svg"
+          alt="Vela Moda & Butik"
           className="mx-auto h-40 w-auto object-contain"
         />
         <h1 className="font-display text-2xl font-semibold text-primary">{text}</h1>

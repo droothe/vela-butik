@@ -9,18 +9,16 @@ import {
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
-
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <img
-          src="/logo.png"
-          alt="Moda Life 1908 — Zamana Direnen Stil"
+          src="/logo.svg"
+          alt="Vela Moda & Butik"
           className="mx-auto mb-6 h-40 w-auto object-contain"
         />
         <h1 className="text-7xl font-bold text-foreground">404</h1>
@@ -44,16 +42,13 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <img
-          src="/logo.png"
-          alt="Moda Life 1908 — Zamana Direnen Stil"
+          src="/logo.svg"
+          alt="Vela Moda & Butik"
           className="mx-auto mb-6 h-40 w-auto object-contain"
         />
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
@@ -89,21 +84,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "MODA LİFE 1908 — Zamana Direnen Stil" },
-      { name: "description", content: "Erkek giyiminde şıklık ve konfor: gömlek, ceket, kazak ve daha fazlası." },
-      { property: "og:title", content: "MODA LİFE 1908 — Zamana Direnen Stil" },
-      { property: "og:description", content: "Erkek giyiminde şıklık ve konfor." },
+      { title: "Vela Moda & Butik — Yeni Sezon Kadın & Erkek Giyim" },
+      { name: "description", content: "Vela Moda & Butik — Yeni Sezon Kadın & Erkek Giyim. Nişantaşı / İstanbul." },
+      { property: "og:title", content: "Vela Moda & Butik — Yeni Sezon Kadın & Erkek Giyim" },
+      { property: "og:description", content: "Nişantaşı / İstanbul'dan yeni sezon kadın ve erkek giyim koleksiyonu." },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "/logo.png" },
+      { property: "og:image", content: "/logo.svg" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "/logo.png" },
+      { name: "twitter:image", content: "/logo.svg" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/logo.png", type: "image/png" },
+      { rel: "icon", href: "/logo.svg", type: "image/svg+xml" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" },

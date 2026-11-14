@@ -16,10 +16,10 @@ import { supabase, supabaseConfigured } from "@/lib/supabase";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MODA LİFE 1908 — Sonbahar / Kış Erkek Koleksiyonu" },
-      { name: "description", content: "Zamana Direnen Stil: gömlek, ceket, triko ve kazakta yeni sezon. Kapıda ödeme, kolay iade." },
-      { property: "og:title", content: "MODA LİFE 1908 — Zamana Direnen Stil" },
-      { property: "og:description", content: "Erkek giyiminde şıklığı ve konforu bir arada sunan özel tasarımlar." },
+      { title: "Vela Moda & Butik — Yeni Sezon Kadın & Erkek Giyim" },
+      { name: "description", content: "Vela Moda & Butik — Yeni Sezon Kadın & Erkek Giyim. Nişantaşı / İstanbul." },
+      { property: "og:title", content: "Vela Moda & Butik — Yeni Sezon Kadın & Erkek Giyim" },
+      { property: "og:description", content: "Kadın ve erkek giyiminde yeni sezon parçaları." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -164,8 +164,8 @@ function Index() {
           </button>
           <a href="/" className="flex min-w-0 items-center gap-2">
             <img
-              src="/logo.png"
-              alt="Moda Life 1908 — Zamana Direnen Stil"
+              src="/logo.svg"
+              alt="Vela Moda & Butik"
               className="h-12 w-auto shrink-0 object-contain md:h-14"
             />
           </a>
@@ -200,10 +200,10 @@ function Index() {
           <div className="max-w-xl text-primary-foreground animate-in fade-in slide-in-from-bottom-6 duration-700">
             <p className="mb-4 text-xs uppercase tracking-[0.3em] text-gold">Sonbahar / Kış 2026</p>
             <h1 className="text-4xl font-semibold leading-[1.05] md:text-6xl">
-              Zamana Direnen Stil: Sonbahar / Kış Koleksiyonu
+              Vela Moda & Butik: Yeni Sezon Koleksiyonu
             </h1>
             <p className="mt-5 text-base opacity-90 md:text-lg">
-              Erkek giyiminde şıklığı ve konforu bir arada sunan özel tasarımlar.
+              Kadın ve erkek giyiminde şıklığı, rahatlığı ve zamansız parçaları keşfedin.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <button onClick={() => pickCat(null)} className="rounded-xl bg-primary-foreground px-6 py-3.5 text-sm font-semibold text-primary shadow-md transition hover:-translate-y-0.5">
@@ -304,11 +304,11 @@ function Index() {
           <div className="mb-8 text-center">
             <Instagram className="mx-auto mb-3 h-6 w-6 text-primary" />
             <h2 className="text-3xl font-semibold text-primary md:text-4xl">Instagram'da Bizi Takip Edin</h2>
-            <a href="https://instagram.com/moda.life1908" target="_blank" rel="noreferrer" className="mt-1 inline-block text-sm font-semibold text-gold hover:underline">@moda.life1908</a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" className="mt-1 inline-block text-sm font-semibold text-gold hover:underline">@vela.moda.butik.demo</a>
           </div>
           <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-3">
             {catalogProducts.slice(0, 8).map((p) => (
-              <a key={p.id} href="https://instagram.com/moda.life1908" target="_blank" rel="noreferrer" className="group relative aspect-square overflow-hidden rounded-xl">
+              <a key={p.id} href="https://www.instagram.com/" target="_blank" rel="noreferrer" className="group relative aspect-square overflow-hidden rounded-xl">
                 <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 grid place-items-center bg-primary/0 transition group-hover:bg-primary/40">
                   <Instagram className="h-6 w-6 text-primary-foreground opacity-0 transition group-hover:opacity-100" />
@@ -324,19 +324,22 @@ function Index() {
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <img
-              src="/logo.png"
-              alt="Moda Life 1908 — Zamana Direnen Stil"
+              src="/logo.svg"
+              alt="Vela Moda & Butik"
               className="mb-4 h-24 w-auto object-contain"
             />
-            <p className="text-sm opacity-75">Zamana Direnen Stil. Erkek giyiminde zamansız parçalar.</p>
+            <p className="text-sm opacity-75">Kadın ve erkek giyiminde zamansız parçalar.</p>
           </div>
           <FooterCol title="Kurumsal" items={["Hakkımızda", "İletişim"]} />
           <FooterCol title="Müşteri Hizmetleri" items={["Kargo & Teslimat", "Değişim Koşulları", "SSS"]} />
           <div>
             <h3 className="mb-4 font-sans text-sm font-semibold uppercase tracking-wider text-gold">İletişim Bilgileri</h3>
-            <a href="https://wa.me/905442636017" className="flex items-center gap-2 text-sm hover:text-gold">
-              <MessageCircle className="h-4 w-4" /> WhatsApp Sipariş Hattı: 0544-263-60-17
+            <a href="https://wa.me/905550000000" className="flex items-center gap-2 text-sm hover:text-gold">
+              <MessageCircle className="h-4 w-4" /> WhatsApp: +90 555 000 00 00
             </a>
+            <a href="mailto:iletisim@velabutik.example" className="mt-2 block text-sm hover:text-gold">iletisim@velabutik.example</a>
+            <p className="mt-2 text-sm">Nişantaşı / İstanbul</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Nişantaşı%2C%20İstanbul" target="_blank" rel="noreferrer" className="mt-2 inline-block text-sm hover:text-gold">Haritada görüntüle</a>
             <div className="mt-6 flex flex-wrap gap-2">
               {["VISA", "Mastercard", "Troy", "Kapıda Ödeme"].map((m) => (
                 <span key={m} className="rounded-md border border-primary-foreground/25 px-2.5 py-1 text-[11px] font-semibold tracking-wide">{m}</span>
@@ -345,12 +348,12 @@ function Index() {
           </div>
         </div>
         <div className="border-t border-primary-foreground/15 py-5 text-center text-xs opacity-60">
-          © {new Date().getFullYear()} MODA LİFE 1908. Tüm hakları saklıdır.
+          © {new Date().getFullYear()} Vela Moda & Butik. Demo mağaza.
         </div>
       </footer>
 
       {/* WhatsApp float */}
-      <a href="https://wa.me/905442636017" aria-label="WhatsApp ile sipariş" className="fixed bottom-5 right-5 z-30 grid h-14 w-14 place-items-center rounded-full bg-gold text-accent-foreground shadow-md transition hover:scale-105">
+      <a href="https://wa.me/905550000000" aria-label="WhatsApp ile sipariş" className="fixed bottom-5 right-5 z-30 grid h-14 w-14 place-items-center rounded-full bg-gold text-accent-foreground shadow-md transition hover:scale-105">
         <MessageCircle className="h-6 w-6" />
       </a>
 

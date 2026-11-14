@@ -48,14 +48,14 @@ export type Product = {
 };
 
 export const PRODUCTS: Product[] = [
-  { id: "1", title: "Yarım Fermuarlı Dik Yaka Selanik Kazak", category: "Triko & Kazak", tag: "Çok Satan", price: 899, oldPrice: 1299, colors: ["Haki Yeşil", "Açık Mavi", "Lacivert"], sizes: ["S", "M", "L", "XL"], image: olive, hover: blue, added: 5 },
-  { id: "2", title: "Hakim Yaka Keten Gömlek", category: "Gömlek", tag: "Yeni", price: 749, colors: ["Kiremit", "Bej"], sizes: ["M", "L", "XL", "XXL"], image: orange, hover: beige, added: 9 },
+  { id: "1", title: "Dokulu Bisiklet Yaka Triko", category: "Triko & Kazak", tag: "Çok Satan", price: 899, oldPrice: 1299, colors: ["Haki Yeşil", "Açık Mavi", "Lacivert"], sizes: ["S", "M", "L", "XL"], image: olive, hover: blue, added: 5 },
+  { id: "2", title: "Kadın Keten Karışımlı Gömlek", category: "Gömlek", tag: "Yeni", price: 749, colors: ["Kiremit", "Bej"], sizes: ["M", "L", "XL", "XXL"], image: orange, hover: beige, added: 9 },
   { id: "3", title: "Düğmeli Triko Hırka", category: "Triko & Kazak", tag: "İndirim", price: 849, oldPrice: 1199, colors: ["Bordo", "Lacivert"], sizes: ["S", "M", "L"], image: cardigan, hover: navy, added: 3 },
-  { id: "4", title: "Kapitone Kadife Yaka Mont", category: "Ceket & Mont", tag: "Yeni", price: 1899, colors: ["Siyah", "Haki Yeşil"], sizes: ["M", "L", "XL", "XXL"], image: jacket, hover: beige, added: 10 },
+  { id: "4", title: "Kadın Kapitone Kısa Mont", category: "Ceket & Mont", tag: "Yeni", price: 1899, colors: ["Siyah", "Haki Yeşil"], sizes: ["M", "L", "XL", "XXL"], image: jacket, hover: beige, added: 10 },
   { id: "5", title: "Fitilli Kadife Gömlek Ceket", category: "Ceket & Mont", tag: "Çok Satan", price: 1149, oldPrice: 1499, colors: ["Bej", "Bordo"], sizes: ["S", "M", "L", "XL"], image: beige, hover: jacket, added: 7 },
-  { id: "6", title: "Uzun Kollu Pike Polo", category: "Polar & Sweatshirt", price: 649, colors: ["Lacivert", "Siyah"], sizes: ["S", "M", "L", "XL", "XXL"], image: navy, hover: olive, added: 6 },
-  { id: "7", title: "Yarım Fermuarlı Kaşmir Hissi Kazak", category: "Triko & Kazak", tag: "Yeni", price: 999, colors: ["Açık Mavi", "Bej"], sizes: ["M", "L", "XL"], image: blue, hover: olive, added: 8 },
-  { id: "8", title: "Selanik Örgü Hırka", category: "Polar & Sweatshirt", tag: "İndirim", price: 799, oldPrice: 1099, colors: ["Bordo", "Haki Yeşil"], sizes: ["S", "M", "L", "XL"], image: cardigan, hover: orange, added: 2 },
+  { id: "6", title: "Erkek Uzun Kollu Pike Polo", category: "Polar & Sweatshirt", price: 649, colors: ["Lacivert", "Siyah"], sizes: ["S", "M", "L", "XL", "XXL"], image: navy, hover: olive, added: 6 },
+  { id: "7", title: "Yumuşak Dokulu Kaşmir Hissi Kazak", category: "Triko & Kazak", tag: "Yeni", price: 999, colors: ["Açık Mavi", "Bej"], sizes: ["M", "L", "XL"], image: blue, hover: olive, added: 8 },
+  { id: "8", title: "Örgü Hırka", category: "Polar & Sweatshirt", tag: "İndirim", price: 799, oldPrice: 1099, colors: ["Bordo", "Haki Yeşil"], sizes: ["S", "M", "L", "XL"], image: cardigan, hover: orange, added: 2 },
 ];
 
 export const LEGACY_PRODUCT_IMAGES: Record<string, { image: string; hover: string }> = {
